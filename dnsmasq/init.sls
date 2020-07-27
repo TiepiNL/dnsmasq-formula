@@ -84,3 +84,16 @@ dnsmasq:
       - file: dnsmasq_conf
       - file: dnsmasq_conf_dir
 {%- endif %}
+
+{%- if salt['pillar.get']('dnsmasq:ignore_resolvconf', false) %}
+{%- if dnsmasq.dnsmasq_default is defined %}
+addons_dnsmasq_ignore_resolvconf:
+  file.uncomment:
+    - name: {{ dnsmasq.dnsmasq_default }}
+    - regex: 'IGNORE_RESOLVCONF=yes'
+    - char: '#'
+    - backup: False
+    - watch_in:
+      - service: dnsmasq
+{%- endif %}
+{%- endif %}

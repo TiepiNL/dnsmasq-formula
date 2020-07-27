@@ -6,6 +6,15 @@ dnsmasq:
   dnsmasq_addresses: salt://dnsmasq/files/dnsmasq.addresses
   dnsmasq_conf_dir: salt://dnsmasq/files/dnsmasq.d
 
+  # If the resolvconf package is installed, dnsmasq will use its output 
+  # rather than the contents of /etc/resolv.conf to find upstream 
+  # nameservers. Uncommenting IGNORE_RESOLVCONF=yes in the dnsmasq default
+  # file inhibits this behaviour. Note that including a "resolv-file=<filename>"
+  # line in /etc/dnsmasq.conf is not enough to override resolvconf if it is
+  # installed: the line must be uncommented. Default: false (do nothing).
+  # Set to true to uncomment. Currently only works on Debian!
+  ignore_resolvconf: true
+
   # Customize dnsmasq settings below - any valid dnsmasq configuration file
   # parameter may be included. One setting per line.
   #
